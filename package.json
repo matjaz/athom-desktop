@@ -1,0 +1,55 @@
+{
+  "version": "0.13.37",
+  "name": "AthomDesktop",
+  "productName": "Athom Desktop",
+  "description": "Athom Desktop",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "lint": "standard",
+    "clean": "rm -rf out",
+    "test": "npm run lint && mocha tests",
+    "sign-exe": "signcode ./out/AthomDesktop-win32-ia32/AthomDesktop.exe --cert ~/athom-desktop.p12 --prompt --name 'Athom Desktop' --url 'https://www.athom.com'",
+    "sign-installer": "signcode ./out/windows-installer/AthomDesktopSetup.exe --cert ~/athom-desktop.p12 --prompt --name 'Athom Desktop' --url 'https://www.athom.com'",
+    "pack-mac": "electron-packager . --asar --overwrite --platform=darwin --arch=x64 --app-version=0.13.37 --icon=assets/app-icon/mac/app.icns --prune=true --out=out --app-bundle-id=com.athom.gui --app-category-type=public.app-category.productivity",
+    "pack-win": "electron-packager . AthomDesktop --asar  --overwrite --platform=win32 --arch=ia32 --icon=assets/app-icon/win/app.ico --prune=true --out=out --version-string.CompanyName='Athom B.V.' --version-string.FileDescription='Athom Desktop' --version-string.ProductName='Athom Desktop'",
+    "pack-linux": "electron-packager . --asar --overwrite --platform=linux --arch=x64 --icon=assets/app-icon/png/64.png --prune=true --out=out",
+    "package": "npm run pack-mac && npm run pack-win",
+    "installer": "node ./script/installer.js",
+    "prepare-release": "npm run package && npm run installer",
+    "release": "node ./script/release.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matjaz/athom-desktop.git"
+  },
+  "keywords": [
+    "Homey"
+  ],
+  "author": "Matjaz Lipus",
+  "homepage": "https://github.com/matjaz/athom-desktop#readme",
+  "dependencies": {
+    "glob": "^6.0.4"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "chai-as-promised": "^5.1.0",
+    "devtron": "^1.0.0",
+    "electron-installer-dmg": "^0.1.1",
+    "electron-packager": "^7.0.1",
+    "electron-prebuilt": "^1.0.2",
+    "electron-winstaller": "^2.2.0",
+    "mocha": "^2.3.4",
+    "request": "^2.70.0",
+    "rimraf": "^2.5.2",
+    "signcode": "^0.4.0",
+    "spectron": "~3.0.0",
+    "standard": "^7.0.1"
+  },
+  "private": true,
+  "standard": {
+    "env": {
+      "mocha": true
+    }
+  }
+}
